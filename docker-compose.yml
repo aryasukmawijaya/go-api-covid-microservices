@@ -1,0 +1,37 @@
+version: "3.8"
+
+services: 
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    ports:
+      - 3306:3306
+    networks: 
+      - app_covid_network
+    environment: 
+      - MYSQL_ROOT_PASSWORD=toor
+    volumes: 
+      - container-volume:/var/lib/mysql
+      - ./sql/database_scheme_and_data.sql:/docker-entrypoint-initdb.d/database_scheme_and_data.sql
+  app-covid:
+    container_name: app-covid
+    image: app-covid:1.1
+    ports:
+      - 80:80
+    depends_on: 
+      - mysql
+    networks: 
+      - app_covid_network
+    environment: 
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=toor
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DBNAME=covid19_db
+
+networks: 
+  app_covid_network:
+    name: app_covid_network
+
+volumes:
+  container-volume:

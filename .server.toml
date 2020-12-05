@@ -1,0 +1,11 @@
+[app]
+name = "app-covid-19"
+host = "localhost"
+port = 8080
+
+[database]
+host = MYSQL_HOST
+port = MYSQL_PORT
+dbname = MYSQL_DBNAME
+username = MYSQL_USERNAME
+password = MYSQL_PASSWORD
